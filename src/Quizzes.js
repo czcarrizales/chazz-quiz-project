@@ -57,7 +57,7 @@ export default function Quizzes() {
                         <div>
                             <h1><Link to={`/quizzes/${quiz._id}`} state={{from: quiz}}>{quiz.title}</Link></h1>
                             <input type="text" id="title" name="title" placeholder="Edit title here" onChange={handleChange} />
-                            <button onClick={() => updateOneQuiz(quiz._id, quizTitle)}>Update Quiz</button>
+                            <button onClick={() => updateOneQuiz(quiz._id, quizTitle)}>Update Quizz</button>
                             <button onClick={() => deleteOneQuiz(quiz._id)}>Delete Quiz</button>
                         </div>
                     )
