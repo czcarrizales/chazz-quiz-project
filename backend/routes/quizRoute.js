@@ -1,4 +1,6 @@
 const express = require('express');
+const mongoose = require('mongoose')
+const Answer = require('../models/answerModel');
 const { db } = require('../models/quizModel');
 const app = express();
 
@@ -13,10 +15,19 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('error: ' + err))
 })
 
+router.route('/quizzes/:_id').get((req, res) => {
+  const id = req.params._id
+  Quiz.findById(id).populate('answers')
+    .then(quiz => res.json(quiz))
+    .catch(err => res.json('error: ' + err))
+})
+
 router.route('/create').post((req, res) => {
   console.log(req.body)
   const newQuiz = new Quiz({
-    title: req.body.title
+    title: req.body.title,
+    question: req.body.question,
+    answers: req.body.answers
   })
 
   newQuiz.save()
@@ -27,6 +38,33 @@ router.route('/create').post((req, res) => {
       res.json({err: 'Quiz creation error'})
     })
     console.log(req.body)
+})
+
+router.route('/createanswer').post( async (req, res) => {
+  const newAnswer = new Answer({
+    _id: new mongoose.Types.ObjectId(),
+    quiz: req.body.quiz,
+    answer: req.body.answer,
+    correct: req.body.correct
+  })
+
+  Quiz.findByIdAndUpdate('635485971bb91df611922133', {$push:{answers: {_id: newAnswer._id}}}, (error, data) => {if(error){console.log(error)}else(console.log(data))})
+
+  
+
+  await newAnswer.save()
+    .then(result => {
+      const newQuiz = new Quiz({
+        title: 'test',
+    question: 'test',
+    answers: newAnswer._id
+      })
+      res.status(200).json(result)
+    })
+    .catch(err => {
+      res.json({err: 'Answer creation error'})
+    })
+    console.log(newAnswer)
 })
 
 router.route('/delete/:_id').delete(async (req, res) => {

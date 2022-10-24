@@ -4,22 +4,32 @@ import axios from 'axios';
 export default function CreateQuiz() {
 
     const [input, setInput] = useState({
-        title: ''
+        title: '',
+        question: '',
+        answer: []
     })
 
     function handleChange(event) {
         const {name, value} = event.target;
-
+        console.log(input)
         setInput(prevInput => {
-            return {...prevInput, [name]: value}
+            return {
+                ...prevInput, [name]: value
+            }
         })
+        console.log(input.answer.correct)
     }
 
     function handleClick(event) {
         event.preventDefault()
 
         const newQuiz = {
-            title: input.title
+            title: input.title,
+            question: input.question,
+        }
+
+        const newAnswer = {
+            
         }
 
         axios.post('http://localhost:5000/quizzes/create', newQuiz)
@@ -29,7 +39,15 @@ export default function CreateQuiz() {
     return (
         <div>
             <form>
+                <label for="title">Quiz Title</label>
                 <input onChange={handleChange} name="title" type='text' value={input.title} />
+                <br />
+                <label for="question">Quiz Question</label>
+                <input onChange={handleChange} name="question" type="text" value={input.question} />
+                <br />
+                <label for="answer">Quiz Answer</label>
+                <input onChange={handleChange} name="answer" type="text" value={input.answer.text}/>
+                <br />
                 <button onClick={handleClick}>Create Quiz</button>
             </form>
         </div>

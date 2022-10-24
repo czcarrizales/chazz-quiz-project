@@ -1,7 +1,10 @@
-import React, {setState, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Quizzes() {
+
+    
 
     const [quizzes, setQuizzes] = useState(null)
     const [quizTitle, setQuizTitle] = useState({})
@@ -21,8 +24,6 @@ export default function Quizzes() {
                 return x
             })
             setQuizzes(quizTitles)
-            console.log(quizTitles)
-            console.log(res.data[2]._id)
         })
         .catch(err => {
             console.log(err)
@@ -54,9 +55,9 @@ export default function Quizzes() {
                 quizzes.map(quiz => {
                     return (
                         <div>
-                            <h1>{quiz.title}</h1>
+                            <h1><Link to={`/quizzes/${quiz._id}`} state={{from: quiz}}>{quiz.title}</Link></h1>
                             <input type="text" id="title" name="title" placeholder="Edit title here" onChange={handleChange} />
-                            <button onClick={() => updateOneQuiz(quiz._id, quizTitle)}>Update Quiz</button>
+                            <button onClick={() => updateOneQuiz(quiz._id, quizTitle)}>Update Quizz</button>
                             <button onClick={() => deleteOneQuiz(quiz._id)}>Delete Quiz</button>
                         </div>
                     )
