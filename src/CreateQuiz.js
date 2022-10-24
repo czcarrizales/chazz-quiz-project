@@ -28,10 +28,6 @@ export default function CreateQuiz() {
             question: input.question,
         }
 
-        const newAnswer = {
-            
-        }
-
         axios.post('http://localhost:5000/quizzes/create', newQuiz)
             .then(res => console.log('quiz created', res))
             .catch(err => console.log('Error with quiz creation', err))
