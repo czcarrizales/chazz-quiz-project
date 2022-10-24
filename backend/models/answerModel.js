@@ -2,8 +2,7 @@ const mongoose = require('mongoose')
 const {Schema} = mongoose;
 
 const answerSchema = new Schema({
-    _id: Schema.Types.ObjectId,
-    quiz: {type: Schema.Types.ObjectId, ref: 'Quiz'},
+    question: {type: Schema.Types.ObjectId, ref: 'Question'},
     answer: String,
     correct: Boolean,
 })
