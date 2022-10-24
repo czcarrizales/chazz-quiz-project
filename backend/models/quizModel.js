@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const {Schema} = mongoose;
-const Answer = require('./answerModel')
 
 const quizSchema = new Schema({
     title: String,
