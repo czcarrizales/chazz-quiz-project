@@ -16,7 +16,7 @@ router.route('/').get((req, res) => {
 
 router.route('/quizzes/:_id').get((req, res) => {
   const id = req.params._id
-  Quiz.findById(id).populate('questions')
+  Quiz.findById(id).populate({path: 'questions', populate: {path: 'answers'}})
     .then(quiz => res.json(quiz))
     .catch(err => res.json('error: ' + err))
 })
