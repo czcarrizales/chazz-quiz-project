@@ -3,8 +3,7 @@ const {Schema} = mongoose;
 
 const quizSchema = new Schema({
     title: String,
-    question: String,
-    answers: [{type: Schema.Types.ObjectId, ref: 'Answer'}]
+    questions: [{type: Schema.Types.ObjectId, ref: 'Question'}]
 })
 
 const Quiz = mongoose.model('Quiz', quizSchema)
