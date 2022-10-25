@@ -6,8 +6,6 @@ export default function ViewQuiz() {
 
     const params = useParams()
     const [quiz, setQuiz] = useState(null)
-    const [questions, setQuestions] = useState(null)
-    const [answers, setAnswers] = useState(null)
     const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -41,6 +39,7 @@ export default function ViewQuiz() {
 
     return (
         <div>
+            <h1>{quiz.data.title}</h1>
             {quiz.data.questions.map(q => {
                 return (
                     <div>
