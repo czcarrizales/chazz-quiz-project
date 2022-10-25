@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 
 export default function Quizzes() {
 
-    
-
     const [quizzes, setQuizzes] = useState(null)
     const [quizTitle, setQuizTitle] = useState({})
 
