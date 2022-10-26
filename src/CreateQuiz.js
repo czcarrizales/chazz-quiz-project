@@ -3,11 +3,14 @@ import axios from "axios";
 import CreateTitle from "./CreateTitle";
 import CreateQuestion from "./CreateQuestion";
 import CreateAnswer from "./CreateAnswer";
+import createQuizStyles from './CreateQuiz.module.css'
 
 export default function CreateQuiz(props) {
   const [input, setInput] = useState({
     title: "",
-    question: ""
+    question: "",
+    answer: "",
+    correct: false
   });
 
   // const [testInput, setTestInput] = useState({
@@ -40,6 +43,17 @@ export default function CreateQuiz(props) {
         [name]: value,
       };
     });
+    console.log(input)
+  }
+
+  function handleClick(event) {
+    setInput((prevInput) => {
+      return {
+        ...prevInput, correct: event.target.checked
+      }
+    })
+    console.log(event.target.checked)
+    console.log(input)
   }
 
   // function handleQuestionInputChange(event) {
@@ -66,7 +80,6 @@ export default function CreateQuiz(props) {
       .post("http://localhost:5000/quizzes/create", newQuiz)
       .then((res) => {
         console.log(res);
-        for (let i = 0; i < numOfQuestions; i++) {
           const newQuestion = {
             quiz: res.data._id,
             question: input.question,
@@ -74,8 +87,16 @@ export default function CreateQuiz(props) {
           axios.post(
             "http://localhost:5000/quizzes/createquestion",
             newQuestion
-          );
-        }
+          )
+          .then((res) => {
+            console.log(res)
+            const newAnswer = {
+              question: res.data._id,
+              answer: input.answer,
+              correct: input.correct
+            }
+            axios.post("http://localhost:5000/quizzes/createanswer", newAnswer)
+          })
       })
       .then((res) => console.log("quiz created", res))
       .catch((err) => console.log("Error with quiz creation", err));
@@ -126,12 +147,13 @@ export default function CreateQuiz(props) {
   //       <button onClick={createQuiz}>Create Quiz</button>
   //     </form>
   //   </div>
-  <div>
-    Testing again
+  <div className={createQuizStyles}>
+    <h1>Create Quiz</h1>
     <form>
       <CreateTitle onChange={handleChange}  />
       <CreateQuestion onChange={handleChange} />
-      <button onClick={createQuiz}>Create Quiz</button>
+      <CreateAnswer className="create-answer-container" onChange={handleChange} onClick={handleClick} />
+      <button onClick={createQuiz}>Submit</button>
     </form>
   </div>
    );
