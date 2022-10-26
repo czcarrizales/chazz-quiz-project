@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import './ViewQuiz.module.css'
 
 export default function ViewQuiz() {
 
@@ -38,14 +39,14 @@ export default function ViewQuiz() {
     }
 
     return (
-        <div>
+        <div className="view-quiz-container">
             <h1>{quiz.data.title}</h1>
             {quiz.data.questions.map(q => {
                 return (
                     <div>
                     <h2>{q.question}</h2>
                     {q.answers.map(a => {
-                        return <li><button onClick={() => checkAnswer(a.correct)}>{a.answer}</button></li>
+                        return <ul><li><button onClick={() => checkAnswer(a.correct)}>{a.answer}</button></li></ul>
                     })}
                     </div>
                 )
