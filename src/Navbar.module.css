@@ -1,0 +1,24 @@
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+p {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 15px;
+    padding: 5px 10px;
+    border: 1px solid;
+    border-radius: 15px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    color: blue;
+}
